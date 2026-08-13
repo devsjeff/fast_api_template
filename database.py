@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from secure import hash_password ,verify_password
 
-DATABASE_URL = "postgresql://postgres:Heymrdev@127.0.0.1:5432/python"
+DATABASE_URL = "postgresql://postgres:PASSWORD@127.0.0.1:5432/DATABASENAME"
 
 engine = create_engine(DATABASE_URL)
 Base = declarative_base()

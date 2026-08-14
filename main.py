@@ -6,7 +6,7 @@ import asyncio
 from secure import verify_password , create_access_token, verify_jwt 
 from schema import Login, password , make_password ,Email , TOKEN
 from Mail import send_email , verify_otp
-from database import insert_user , get_user_password
+from database import insert_user , get_user_password ,get_data
 
 app = FastAPI()
 
@@ -41,14 +41,10 @@ async def login(object:Login  ,request: Request):
 @app.post("/posts")
 @limiter.limit("5/minute")
 async def posts(TOKEN:TOKEN ,request:Request):
-    if verify_jwt(token=TOKEN.token):
-        return "here is your 570 posts"
-    else:
-        return "WRONG DETAILS"
+    data = verify_jwt(token=TOKEN.token)
+    if not data :
+        return "Wrong credentials"
+    return get_data(data.get("id"))
     
-@app.get("/slow")
-@limiter.limit("3/minute")
-
-async def get (request:Request):
-    return "non blocked"
+    
     

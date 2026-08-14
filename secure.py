@@ -24,14 +24,14 @@ def verify_password( hashed_password: str ,password: str) -> bool:
 
 
 def create_access_token(email ):
-    expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=25)
     payload = {"sub": email, "exp": expire}
     return jwt.encode(payload,SECRET_KEY,algorithm=ALGORITHM) 
 
 def verify_jwt( token ):
     try :
-        jwt.decode(token=token , key = SECRET_KEY , algorithms=[ALGORITHM]) 
-        return True
+        decrypted = jwt.decode(token=token , key = SECRET_KEY , algorithms=[ALGORITHM]) 
+        return {"id": decrypted["sub"] ,"result" : True }
+        print(decrypted["sub"])
     except JWTError:
         return False
-        

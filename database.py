@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from secure import hash_password ,verify_password
 
-DATABASE_URL = "postgresql://postgres:PASSWORD@127.0.0.1:5432/DATABASENAME"             #better to get from env
+DATABASE_URL = "postgresql://postgres:Heymrdev@127.0.0.1:5432/python"             #better to get from env
 
 engine = create_engine(DATABASE_URL)
 Base = declarative_base()
@@ -14,6 +14,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(255), unique=True)
     password = Column(String(255))
+    data = Column(String(255))
     
 
 def insert_user(email, password):
@@ -42,5 +43,15 @@ def get_user_password(email):
             return user.password
         else:
             return None
+    finally:
+        session.close()
+def get_data(email):
+    session = SessionLocal()
+    try :
+        user = session.query(User.data).filter(User.email == email ).first()
+        if user.data :
+            return user.data
+    except:
+        return None
     finally:
         session.close()

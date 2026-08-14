@@ -31,5 +31,6 @@ def verify_otp(email, otp):
     if stored_otp is None:
         return False
     result = stored_otp.decode() == otp
-    redis_db.delete(email)
+    if result:
+        redis_db.delete(email)
     return result

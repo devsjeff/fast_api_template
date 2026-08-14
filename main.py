@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import asyncio
-from secure import verify_password
-from schema import Login, password , make_password ,Email
+from secure import verify_password , create_access_token, verify_jwt 
+from schema import Login, password , make_password ,Email , TOKEN
 from Mail import send_email , verify_otp
 from database import insert_user , get_user_password
 
@@ -22,5 +22,13 @@ async def home(object:make_password):
 @app.post("/login")
 async def login(object:Login):
     if verify_password(get_user_password(object.email), object.password):
-        return {"message":"Login successful"}
+        
+        return {"message":"Login successful" ,"token":create_access_token(object.email) }
     return {"message":"Invalid email or password"}
+
+@app.post("/posts")
+async def posts(TOKEN:TOKEN):
+    if verify_jwt(token=TOKEN.token):
+        return "here is your 570 posts"
+    else:
+        "WRONG DETAILS"

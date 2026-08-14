@@ -11,7 +11,6 @@ redis_db = redis.Redis(host='localhost', port=6379, db=0)
 
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
-
 def send_email(email):
     msg = EmailMessage()
     msg['From'] = EMAIL
@@ -22,7 +21,10 @@ def send_email(email):
     with smtplib.SMTP_SSL("smtp.gmail.com" , 465) as smtp:
         smtp.login(user=EMAIL , password=PASSWORD)
         smtp.send_message(msg)
-    redis_db.set(email, OTP , ex=300) 
+    try :
+        redis_db.set(email, OTP , ex=300) 
+    except Exception:
+        raise RuntimeError("redis is running maybe CHECK")
 
 def verify_otp(email, otp):
     stored_otp = redis_db.get(email)

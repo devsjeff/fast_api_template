@@ -13,3 +13,9 @@ class Email(BaseModel):
 class Login(BaseModel):
     email:str
     password:str
+    
+class JWT_verify(BaseModel):
+    Email :str
+    token :str
+class TOKEN(BaseModel):
+    token :str

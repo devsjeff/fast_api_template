@@ -1,1 +1,0 @@
-print(verify_password(hashed , "Heymrdev"))

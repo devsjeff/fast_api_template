@@ -12,7 +12,8 @@ async def chat(websocket: WebSocket):
 
 
 
-# file ---------------------------------------------------------------
+# file ---------------------------------------------------------------   FILE HANDLE CODE IS SUGGESTED BY AI , Check official source to use in series projects and i sould 
+# suggest use more latest ways to handle upcoming files in your system and please dont store images in your postgres😂
 
 
 import os
